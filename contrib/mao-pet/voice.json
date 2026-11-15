@@ -1,0 +1,7 @@
+{
+  "generator": "mmx speech synthesize",
+  "model": "speech-2.8-hd",
+  "voice": "Chinese (Mandarin)_Soft_Girl",
+  "clips": 42,
+  "note": "本目录所有 mp3 均由 MiniMax（mmx-cli）生成。不要用 macOS say 或其它 TTS 替换——实测音色不能听。重新生成：python3 ../pet-voice/pet-voice-gen.py --pet mao --voice \"Chinese (Mandarin)_Soft_Girl\" --force"
+}

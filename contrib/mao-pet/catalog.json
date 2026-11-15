@@ -1,0 +1,89 @@
+{
+  "motions": [
+    {
+      "key": "Idle",
+      "label": "待机",
+      "category": "idle"
+    },
+    {
+      "key": "react-1",
+      "label": "抬手",
+      "category": "action"
+    },
+    {
+      "key": "react-2",
+      "label": "歪头",
+      "category": "action"
+    },
+    {
+      "key": "react-3",
+      "label": "扶帽",
+      "category": "action"
+    },
+    {
+      "key": "react-4",
+      "label": "举手",
+      "category": "action"
+    },
+    {
+      "key": "react-5",
+      "label": "挥手",
+      "category": "action"
+    },
+    {
+      "key": "react-6",
+      "label": "张望",
+      "category": "action"
+    }
+  ],
+  "expressions": [
+    {
+      "key": "exp_01",
+      "label": "表情 1",
+      "category": "emotion",
+      "file": "expressions/exp_01.exp3.json"
+    },
+    {
+      "key": "exp_02",
+      "label": "表情 2",
+      "category": "emotion",
+      "file": "expressions/exp_02.exp3.json"
+    },
+    {
+      "key": "exp_03",
+      "label": "表情 3",
+      "category": "emotion",
+      "file": "expressions/exp_03.exp3.json"
+    },
+    {
+      "key": "exp_04",
+      "label": "表情 4",
+      "category": "emotion",
+      "file": "expressions/exp_04.exp3.json"
+    },
+    {
+      "key": "exp_05",
+      "label": "表情 5",
+      "category": "emotion",
+      "file": "expressions/exp_05.exp3.json"
+    },
+    {
+      "key": "exp_06",
+      "label": "表情 6",
+      "category": "emotion",
+      "file": "expressions/exp_06.exp3.json"
+    },
+    {
+      "key": "exp_07",
+      "label": "表情 7",
+      "category": "emotion",
+      "file": "expressions/exp_07.exp3.json"
+    },
+    {
+      "key": "exp_08",
+      "label": "表情 8",
+      "category": "emotion",
+      "file": "expressions/exp_08.exp3.json"
+    }
+  ]
+}

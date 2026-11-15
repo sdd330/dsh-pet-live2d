@@ -1,0 +1,141 @@
+{
+  "petManifestVersion": 2,
+  "id": "mao",
+  "displayName": "小舞 Mao",
+  "description": "Live2D 官方示例模型 Mao：2 组待机 + 6 个互动动作（抬手/歪头/扶帽/举手/挥手/张望），8 个表情。",
+  "version": "1.0.0",
+  "renderer": "live2d",
+  "live2d": {
+    "model": "Mao.model3.json",
+    "scale": 1,
+    "translate": {
+      "x": 0,
+      "y": 0
+    },
+    "motions": {
+      "idle": "Idle",
+      "thinking": "Idle",
+      "waiting": "Idle",
+      "tool": "Idle",
+      "done": "react-4",
+      "failed": "react-2"
+    },
+    "expressionSlots": [
+      {
+        "id": "face",
+        "label": "表情",
+        "none": "默认",
+        "options": [
+          {
+            "label": "表情 1",
+            "expressions": [
+              "exp_01"
+            ]
+          },
+          {
+            "label": "表情 2",
+            "expressions": [
+              "exp_02"
+            ]
+          },
+          {
+            "label": "表情 3",
+            "expressions": [
+              "exp_03"
+            ]
+          },
+          {
+            "label": "表情 4",
+            "expressions": [
+              "exp_04"
+            ]
+          },
+          {
+            "label": "表情 5",
+            "expressions": [
+              "exp_05"
+            ]
+          },
+          {
+            "label": "表情 6",
+            "expressions": [
+              "exp_06"
+            ]
+          },
+          {
+            "label": "表情 7",
+            "expressions": [
+              "exp_07"
+            ]
+          },
+          {
+            "label": "表情 8",
+            "expressions": [
+              "exp_08"
+            ]
+          }
+        ]
+      }
+    ],
+    "lines": {
+      "greet": [
+        "嗨…我是小舞～",
+        "你、你来啦…",
+        "今天也一起加油吧…",
+        "呜…终于见到你了",
+        "我、我在这儿呢",
+        "有什么想让我做的吗…"
+      ],
+      "click": [
+        "诶…？",
+        "呀！别、别戳啦…",
+        "唔…痒痒的",
+        "干、干嘛呀…",
+        "人家在呢…",
+        "诶嘿…有点不好意思",
+        "呀！吓我一跳…",
+        "别、别闹啦…"
+      ],
+      "pat": [
+        "唔…好舒服…",
+        "再、再摸一下也可以…",
+        "呀…头发要乱了啦",
+        "好舒服…可以一直摸吗",
+        "嗯…最喜欢这样了…",
+        "啊…那里、那里不行…",
+        "诶嘿嘿…有点不好意思"
+      ],
+      "tail": [
+        "呀！别、别乱碰啦…",
+        "那、那里不行！",
+        "呜…尾巴很敏感的…",
+        "再摸我要生气了…"
+      ],
+      "spin": [
+        "呜…转晕了…",
+        "别、别转了啦…",
+        "头晕…快停下…",
+        "再转我要吐了啦…"
+      ],
+      "reset": [
+        "好啦…归位～",
+        "恢复正常了…",
+        "嗯…这样才对嘛"
+      ],
+      "loadFailed": [
+        "呜…模型加载失败了",
+        "怎、怎么回事呀…我动不了"
+      ],
+      "phase": {
+        "thinking": "让我想想…",
+        "tool": "正在忙…",
+        "waiting": "需要你确认一下",
+        "asking": "在等你回答哦",
+        "helper": "叫了帮手一起弄",
+        "queued": "收到，记下了",
+        "done": "搞定！",
+        "failed": "呜…出错了"
+      }
+    }
+  }
+}

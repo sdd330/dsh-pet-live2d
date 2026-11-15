@@ -1,0 +1,41 @@
+{
+  "displayName": "Mao",
+  "description": "Official Live2D sample model Mao.",
+  "catalog": {
+    "motions": {
+      "Idle": "Idle",
+      "react-1": "Arms up",
+      "react-2": "Head tilt",
+      "react-3": "Tip the hat",
+      "react-4": "Raise hand",
+      "react-5": "Wave",
+      "react-6": "Look around"
+    },
+    "expressions": {
+      "exp_01": "Expression 1",
+      "exp_02": "Expression 2",
+      "exp_03": "Expression 3",
+      "exp_04": "Expression 4",
+      "exp_05": "Expression 5",
+      "exp_06": "Expression 6",
+      "exp_07": "Expression 7",
+      "exp_08": "Expression 8"
+    }
+  },
+  "slots": {
+    "face": {
+      "label": "Face",
+      "none": "Default",
+      "options": {
+        "exp_01": "Expression 1",
+        "exp_02": "Expression 2",
+        "exp_03": "Expression 3",
+        "exp_04": "Expression 4",
+        "exp_05": "Expression 5",
+        "exp_06": "Expression 6",
+        "exp_07": "Expression 7",
+        "exp_08": "Expression 8"
+      }
+    }
+  }
+}

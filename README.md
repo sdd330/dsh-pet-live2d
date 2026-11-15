@@ -31,7 +31,7 @@
 
 <div align="center">
 
-[是什么](#是什么) · [快速上手](#快速上手) · [怎么玩](#怎么玩) · [跟着会话走](#跟着会话走) · [设置](#设置) · [加一只宠物](#加一只宠物) · [目录结构](#目录结构) · [开发与验证](#开发与验证) · [常见问题](#常见问题) · [交流群](#交流群) · [许可](#许可)
+[是什么](#是什么) · [快速上手](#快速上手) · [怎么玩](#怎么玩) · [跟着会话走](#跟着会话走) · [设置](#设置) · [加一只宠物](#加一只宠物) · [小舞 Mao（含语音）](#小舞-mao含语音) · [目录结构](#目录结构) · [开发与验证](#开发与验证) · [常见问题](#常见问题) · [交流群](#交流群) · [许可](#许可)
 
 </div>
 
@@ -177,9 +177,47 @@ dsh plugin --profile web remove dsh-pet-live2d   # 卸载（%DSH_HOME%\pets\ 里
 
 > ⚠️ 路径片段只允许 `[A-Za-z0-9._-]`，中文文件名会让整个宠物加载失败 —— 用
 > `tools/build-pet.mjs` 转换（仓库里随包的宠物就是 `model-packs/DS鼠控版` 过一遍它的产物）。
+> 注意它是**给 DS鼠控版 专用**的脚本（文件名和动作表都写死在里面），换成别的模型要自己
+> 保证资源路径全是 ASCII。
 
 槽位 / 池子 / 相位 / 动作语义的完整契约见
 [`dsh-live2d-pet/README.md#做一只自己的宠物`](dsh-live2d-pet/README.md#做一只自己的宠物)。
+
+### 小舞 Mao（含语音）
+
+[`contrib/mao-pet/`](contrib/mao-pet/) 是一份**完整的现成配置**：Live2D 官方示例角色 Mao
+（小舞），带相位动作映射、中文标签、8 个表情的装扮槽、台词，以及 [`contrib/pet-voice/`](contrib/pet-voice/)
+提供的 **28 条语音**。装完她会在回合完成时做动作说「搞定！」，出错时说「呜…出错了」；
+其余时候**不出声**（高频状态不念，避免打扰，见 `contrib/pet-voice/` 的 `PET_PHASES`）。
+
+```bash
+# 1) 装宠物（模型从 Live2D 官方仓库拉取，不随本仓库分发）
+cd contrib/mao-pet && ./install.sh
+
+# 2) 刷新 DSH 页面 → 右键桌宠 → 标题栏下拉选「小舞 Mao」
+
+# 3) 让她说话（macOS；Linux 换 systemd user unit + paplay）
+cp contrib/pet-voice/*.py contrib/pet-voice/*.sh ~/.dsh/
+~/.dsh/pet-voice-ctl.sh --on
+```
+
+`install.sh` 也可以接一个本地已有的模型目录：`./install.sh /path/to/Mao`。
+
+**补了哪些原本不工作的部分**：
+
+| 问题 | 修法 |
+|---|---|
+| 完成任务 / 出错时**不播动作** | 内置相位表是照 DS鲸鱼娘 写的（`done:"BubbleGum"`、`failed:"SprayWater"`），Mao 没有这些组；`pet.json` 的 `live2d.motions` 覆盖成 `done → react-4`（举手）、`failed → react-2`（歪头） |
+| 一个 `TapBody` 组 6 个动作，而客户端固定播索引 0 → 两个相位长得一样 | `setup.mjs` 把组拆成 `react-1..6`，每组 1 个动作 |
+| 中文界面里动作名不翻译 | 中文界面**不加载 `locale/` 覆盖层**，所以中文名写进 `catalog.json` 的 `label`（待机 / 互动 一~六 / 表情 1~8） |
+| 装扮页签是空的 | `pet.json` 增加 `expressionSlots`，把 8 个表情放进一个槽 |
+
+> 🔒 **模型文件不在本仓库**。Live2D《无偿提供素材使用授权协议》4.1.1 禁止再分发本素材，
+> 所以 `.moc3` / 贴图 / 动作由 `install.sh` 在**使用者的机器上**从
+> [Live2D/CubismWebSamples](https://github.com/Live2D/CubismWebSamples) 拉取。
+> 使用该模型请遵守 [示例数据利用条件](https://www.live2d.com/eula/live2d-sample-model-terms_cn.html)：
+> 个人及年收 < 1000 万日元的小规模事业者可用于营利 / 非营利目的，企业用户限于内部与监修用途。
+> 语音是我们自己的台词 + MiniMax TTS 生成，随仓库分发。
 
 ## 目录结构
 
