@@ -41,6 +41,31 @@ window.__ModuleLoader__.load({ id: "dsh-pet-live2d", factory: (require) => {
   const API = "/api/live2d-pet";
   const STORAGE_KEY = "dsh-live2d-pet.state.v1";
 
+  // ---- 互动语音：防抖 + 单实例 ----
+  //
+  // 连续点她时，每次点击都会建一个 Audio 并立刻 play()，不防抖就会叠着播（听感像卡带，
+  // 而且同一句会重复好几遍）。这里的策略是：**间隔内的后续点击直接丢弃**，并且新的一句
+  // 开始时把上一句停掉，任何时候最多一个声音。
+  const VOICE_GAP_MS = 500;
+  let voiceLastAt = 0;
+  let voicePlaying = null;
+  function playInteractionVoice(url) {
+    const now = Date.now();
+    if (now - voiceLastAt < VOICE_GAP_MS) return;
+    voiceLastAt = now;
+    try {
+      if (voicePlaying !== null) {
+        voicePlaying.pause();
+        voicePlaying.currentTime = 0;
+      }
+      const audio = new Audio(url);
+      voicePlaying = audio;
+      const started = audio.play();
+      // 自动播放可能被浏览器拦：静默忽略，气泡照旧显示。
+      if (started && typeof started.catch === "function") started.catch(() => {});
+    } catch (_) { /* 语音是附加效果，绝不影响台词气泡 */ }
+  }
+
   // ---- 存储：`localStorage` 要裹起来用 ----
   //
   // 为什么不能直接 `window.localStorage.getItem(...)`：**有些桌面外壳里访问它就抛异常**
@@ -6516,6 +6541,26 @@ window.__ModuleLoader__.load({ id: "dsh-pet-live2d", factory: (require) => {
      * 文本本身由调用方从 `linesNow()` 取（宠物默认 + 用户覆盖）。
      */
     const say = useCallback((text) => {
+      // 语音：catalog 的 `voice` 把**台词文本**映射到 voice/<file>，所以挂在这一个
+      // 函数上就覆盖了全部互动——点击、摸头、摸尾巴、绕晕、归位、问候、相位台词
+      // 共 9 处调用点都走这里。气泡关掉时语音照常播（两件事互不依赖）。
+      if (typeof text === "string" && text !== "") {
+        try {
+          const current = MANIFEST.current;
+          // 分工：**相位台词与问候交给宿主旁的守护（pet-voice），这里只播互动**。
+          // 否则同一句会被播两遍——守护播一次、页面又播一次。
+          const phase = current && current.lines ? current.lines.phase : undefined;
+          const greet = current && current.lines ? current.lines.greet : undefined;
+          const handledElsewhere = (Array.isArray(greet) && greet.includes(text))
+            || (phase && typeof phase === "object" && Object.values(phase).includes(text));
+          const file = handledElsewhere ? undefined
+            : (current && current.voice ? current.voice[text] : undefined);
+          if (file !== undefined && file !== null) {
+            playInteractionVoice(API + "/voice/" + encodeURIComponent(current.id)
+              + "/" + encodeURIComponent(file));
+          }
+        } catch (_) { /* 语音是附加效果，绝不因为它影响台词气泡 */ }
+      }
       if (!FLAGS.bubbleEnabled) return;
       if (typeof text !== "string" || text === "") return;
       setBubble(text);
